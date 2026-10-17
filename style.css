@@ -1,0 +1,240 @@
+/* ==========================================================================
+   STYLE.CSS (Arabesco)
+   Como editar:
+   1. Cores e fontes: só mexer nas variáveis da secção "TOKENS" (topo do ficheiro).
+   2. Tudo o resto usa essas variáveis, por isso o site muda de aspeto todo de uma vez.
+   3. Mobile primeiro: os estilos base são para telemóvel; os @media (min-width) acrescentam
+      o que muda em ecrãs maiores.
+   ========================================================================== */
+
+/* ---------- TOKENS (EDITAR) ---------- */
+:root {
+  /* Paleta tirada do logótipo e das fotos do próprio espaço */
+  --ouro: #E2A856;            /* dourado do logótipo: filetes, botões sobre fundo escuro */
+  --ouro-claro: #F0D9A9;      /* dourado claro: texto sobre fundo escuro */
+  --bronze: #A56415;          /* bronze do logótipo (só decorativo: no texto pequeno usar --bronze-texto) */
+  --bronze-texto: #86490B;    /* passo mais escuro do bronze, para texto sobre creme (contraste 5,7:1 ou mais) */
+  --castanho: #33200D;        /* castanho-escuro da madeira do interior: fundos escuros */
+  --castanho-2: #26180A;      /* rodapé */
+  --creme: #FBF6EC;           /* fundo da página */
+  --creme-2: #F2E7D0;         /* fundo das secções alternadas */
+  --tinta: #2B1A0A;           /* texto corrente */
+  --tinta-suave: #5A4630;     /* texto secundário */
+  --linha: rgba(134, 73, 11, 0.28);
+
+  /* Fontes derivadas do logótipo. Têm de coincidir com o <link> do Google Fonts no index.html. */
+  --f-titulos: "Young Serif", Georgia, "Times New Roman", serif;
+  --f-texto: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --raio: 2px;                /* cantos dos botões e das fotos (sem botões em pílula) */
+  --largura: 1120px;
+  --espaco: clamp(64px, 10vw, 128px);
+}
+
+/* ---------- BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--f-texto);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--tinta);
+  background: var(--creme);
+}
+img, svg { max-width: 100%; height: auto; }
+p { margin: 0 0 1em; }
+a { color: var(--bronze-texto); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--bronze); outline-offset: 3px; }
+
+h1, h2, h3 { font-family: var(--f-titulos); font-weight: 500; color: var(--castanho); margin: 0 0 .4em; line-height: 1.2; }
+h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); letter-spacing: 0; }
+h3 { font-size: 1.1rem; letter-spacing: 0; }
+
+.container { width: min(100% - 40px, var(--largura)); margin-inline: auto; }
+
+.saltar { position: absolute; left: -9999px; }
+.saltar:focus { left: 12px; top: 12px; z-index: 100; background: #fff; padding: 8px 12px; }
+
+.rotulo {
+  font-family: var(--f-titulos); font-size: .72rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--bronze-texto); margin: 0 0 .5em;
+}
+
+/* ---------- ORNAMENTO (losango, como no logótipo) ---------- */
+.orn { display: flex; align-items: center; gap: 14px; margin: 0 0 1.6rem; }
+.orn::before, .orn::after { content: ""; height: 1px; background: var(--ouro); flex: 1; }
+.orn span { width: 7px; height: 7px; background: var(--ouro); transform: rotate(45deg); flex: none; }
+.orn--curto { width: 140px; }
+
+/* ---------- BOTÕES (retangulares, cantos curtos) ---------- */
+.btn {
+  display: inline-block;
+  padding: 15px 28px;
+  font-family: var(--f-titulos); font-weight: 600; font-size: .82rem;
+  letter-spacing: .18em; text-transform: uppercase; text-decoration: none;
+  background: var(--castanho); color: var(--creme);
+  border: 1px solid var(--castanho); border-radius: var(--raio);
+  cursor: pointer; line-height: 1.2;
+}
+.btn:hover { background: var(--tinta); }
+.btn--pequeno { padding: 11px 18px; font-size: .74rem; }
+.btn--ouro { background: var(--ouro); color: var(--castanho); border-color: var(--ouro); }
+.btn--ouro:hover { background: var(--ouro-claro); border-color: var(--ouro-claro); }
+.btn--contorno { background: transparent; color: var(--castanho); border-color: var(--castanho); }
+.btn--contorno:hover { background: var(--castanho); color: var(--creme); }
+.btn--contorno-claro { background: transparent; color: var(--ouro-claro); border-color: var(--ouro); }
+.btn--contorno-claro:hover { background: rgba(226, 168, 86, .14); }
+
+.ligacao-seta { font-family: var(--f-titulos); font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+
+/* ---------- CABEÇALHO ---------- */
+.cabecalho { position: sticky; top: 0; z-index: 50; background: rgba(251, 246, 236, .97); border-bottom: 1px solid var(--linha); }
+.cabecalho__linha { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.cabecalho__nome { font-family: var(--f-titulos); font-weight: 600; font-size: 1.05rem; letter-spacing: .32em; text-transform: uppercase; text-decoration: none; color: var(--castanho); }
+.menu { display: none; }
+@media (min-width: 900px) {
+  .menu { display: flex; gap: 32px; }
+  .menu a { font-family: var(--f-titulos); font-size: .76rem; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; color: var(--tinta); }
+  .menu a:hover { color: var(--bronze-texto); text-decoration: underline; text-underline-offset: 6px; }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  background: var(--castanho);
+  color: var(--ouro-claro);
+  text-align: center;
+  padding: clamp(44px, 7vw, 88px) 0 clamp(52px, 7vw, 96px);
+}
+/* moldura fina dourada, à maneira de um diploma antigo */
+.hero::before { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(226, 168, 86, .5); pointer-events: none; }
+.hero::after  { content: ""; position: absolute; inset: 17px; border: 1px solid rgba(226, 168, 86, .22); pointer-events: none; }
+.hero__logo { display: block; margin: 0 auto; width: min(72vw, 38.5vh, 400px); height: auto; }
+.hero h1 { font-family: var(--f-texto); font-style: italic; font-weight: 400; font-size: clamp(1.5rem, 3.6vw, 2.25rem); line-height: 1.25; color: var(--creme); max-width: 24ch; margin: 30px auto 12px; }
+.hero__sub { font-family: var(--f-titulos); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ouro); margin: 0; }
+.hero__acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 30px; }
+
+/* ---------- FAIXA: HORÁRIO, MORADA, TELEFONE ---------- */
+.faixa { background: var(--creme); border-bottom: 1px solid var(--linha); }
+.faixa__grelha { display: grid; }
+.faixa__item { text-align: center; padding: 26px 16px; border-top: 1px solid var(--linha); }
+.faixa__item:first-child { border-top: 0; }
+.faixa__valor { font-size: 1.35rem; line-height: 1.35; margin: 0; }
+.faixa__valor a { color: var(--tinta); text-decoration: none; }
+.faixa__valor a:hover { color: var(--bronze-texto); text-decoration: underline; }
+@media (min-width: 760px) {
+  .faixa__grelha { grid-template-columns: repeat(3, 1fr); }
+  .faixa__item { border-top: 0; border-left: 1px solid var(--linha); padding: 34px 16px; }
+  .faixa__item:first-child { border-left: 0; }
+}
+
+/* ---------- SECÇÕES ---------- */
+.secao { padding-block: var(--espaco); }
+.secao--tom { background: var(--creme-2); }
+.secao--escura { background: var(--castanho); color: var(--creme); }
+.secao--escura h2 { color: var(--creme); }
+.secao--escura a { color: var(--ouro-claro); }
+.secao--escura .rotulo { color: var(--ouro); }
+.orn--claro::before, .orn--claro::after { background: rgba(226, 168, 86, .6); }
+
+.duas-colunas { display: grid; gap: 40px; align-items: center; }
+.texto p { max-width: 36em; }
+@media (min-width: 900px) {
+  .duas-colunas { grid-template-columns: 1fr 1fr; gap: 80px; }
+  .duas-colunas--inversa .foto { order: -1; }
+}
+
+/* ---------- FOTOS (passepartout fino dourado) ---------- */
+.foto { position: relative; margin: 9px; }
+.foto img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: var(--raio); outline: 1px solid var(--ouro); outline-offset: 8px; }
+.foto--ampla img { aspect-ratio: 4 / 3; }
+.fotos-par { display: flex; gap: 22px; align-items: stretch; height: clamp(260px, 62vw, 440px); }
+.fotos-par .foto { margin: 9px; height: calc(100% - 18px); }
+.foto--grande { flex: 1.5; }
+.foto--alta { flex: 1; }
+.fotos-par .foto img { height: 100%; }
+
+/* ---------- A MONTRA: itens ---------- */
+.itens { display: grid; gap: 22px; margin-top: 30px; }
+.item { padding-top: 18px; border-top: 1px solid var(--linha); }
+.item p { margin: 0; color: var(--tinta-suave); }
+@media (min-width: 560px) { .itens { grid-template-columns: 1fr 1fr; gap: 26px 34px; } }
+
+/* ---------- COMO CHEGAR ---------- */
+address { font-style: normal; font-size: 1.35rem; line-height: 1.4; margin-bottom: 1.4rem; }
+.horario { margin: 0 0 1.4rem; max-width: 420px; }
+.horario div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); }
+.horario dt { font-family: var(--f-titulos); font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; align-self: center; }
+.horario dd { margin: 0; }
+.nota { font-size: 1rem; color: var(--tinta-suave); }
+.mapa { margin-top: 56px; min-height: 340px; display: grid; place-content: center; justify-items: center; gap: 12px; text-align: center; padding: 24px; background: var(--creme-2); border: 1px solid var(--linha); border-radius: var(--raio); }
+.mapa iframe { width: 100%; height: 100%; min-height: 380px; border: 0; }
+.mapa--ativo { padding: 0; display: block; }
+
+/* ---------- OPINIÕES ---------- */
+.opinioes__nota { font-family: var(--f-titulos); font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ouro); margin-bottom: 2.2rem; }
+.citacao { margin: 0; }
+.citacao p { font-style: italic; line-height: 1.5; }
+.citacao footer { font-family: var(--f-titulos); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ouro); margin-top: 1rem; }
+.citacao--grande { max-width: 30em; padding-left: 26px; border-left: 1px solid var(--ouro); margin-bottom: 3rem; }
+.citacao--grande p { font-size: clamp(1.45rem, 3vw, 2rem); color: var(--creme); }
+.citacoes { display: grid; gap: 34px; }
+.citacoes .citacao { padding-top: 22px; border-top: 1px solid rgba(226, 168, 86, .4); }
+.citacoes .citacao p { font-size: 1.15rem; color: var(--creme); }
+.opinioes__ligacao { margin: 2.6rem 0 0; font-size: 1rem; }
+@media (min-width: 900px) { .citacoes { grid-template-columns: 1fr 1fr; gap: 56px; } }
+
+/* ---------- CONTACTOS ---------- */
+.secao--contactos { border-top: 1px solid rgba(226, 168, 86, .35); }
+.contactos { display: grid; gap: 40px; }
+.contactos__lista { list-style: none; margin: 0; padding: 0; }
+.contactos__lista li { padding: 16px 0; border-bottom: 1px solid rgba(226, 168, 86, .3); display: grid; gap: 4px; }
+.contactos__lista li:first-child { border-top: 1px solid rgba(226, 168, 86, .3); }
+@media (min-width: 900px) {
+  .contactos { grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+  .contactos__lista li { grid-template-columns: 140px 1fr; align-items: baseline; }
+}
+
+/* ---------- RODAPÉ ---------- */
+.rodape { background: var(--castanho-2); color: #E9DFCB; padding: 56px 0 100px; font-size: 1.02rem; }
+.rodape a { color: var(--ouro-claro); }
+.rodape__grelha { display: grid; gap: 32px; align-items: center; justify-items: center; text-align: center; }
+.rodape__logo { width: 110px; height: auto; }
+.rodape ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; }
+.rodape__copy { margin-top: 34px; text-align: center; opacity: .75; font-size: .92rem; }
+@media (min-width: 900px) {
+  .rodape__grelha { grid-template-columns: auto 1fr; justify-items: start; text-align: left; gap: 64px; }
+  .rodape ul { justify-content: flex-end; justify-self: end; }
+}
+
+/* ---------- BOTÃO FLUTUANTE (LIGAR) ---------- */
+.ligar-flutuante {
+  position: fixed; right: 16px; bottom: 16px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px;
+  background: var(--ouro); color: var(--castanho);
+  font-family: var(--f-titulos); font-weight: 600; font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; text-decoration: none;
+  border: 1px solid var(--castanho); border-radius: var(--raio);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+}
+.ligar-flutuante:hover { background: var(--ouro-claro); }
+
+/* ---------- ANIMAÇÃO DE ENTRADA (única, subtil) ----------
+   Só os títulos das secções têm a classe .reveal. Para remover o efeito por completo,
+   apagar este bloco e o código de IntersectionObserver no script.js. */
+.js .reveal { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+.js .reveal.visivel { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- PÁGINAS LEGAIS (termos.html e privacidade.html) ---------- */
+.legal { padding-block: 56px 100px; }
+.legal .conteudo { max-width: 700px; }
+.legal h1 { font-size: clamp(1.7rem, 4.6vw, 2.4rem); letter-spacing: 0; }
+.legal h2 { font-size: 1.3rem; letter-spacing: 0; margin-top: 2.2rem; }
+.legal ul { padding-left: 1.2rem; }
+.legal .aviso { background: var(--creme-2); border-left: 3px solid var(--ouro); padding: 12px 16px; font-size: 1rem; }
